@@ -6,7 +6,7 @@ inputs:
     description: |
       Setup mode:
       - build: Complete environment (Node + Rust + System deps + Cache)
-      - node: Node.js only (pnpm + Node 22)
+      - node: Node.js only (pnpm + Node 24)
       - rust: Rust only (toolchain + targets)
     required: false
     default: "build"
@@ -60,7 +60,7 @@ runs:
       if: env.SETUP_NODE == 'true'
       uses: actions/setup-node@v4
       with:
-        node-version: "22"
+        node-version: "24"
         cache: pnpm
 
     - name: Install dependencies
@@ -128,7 +128,6 @@ runs:
       shell: powershell
       run: |
         try {
-          # Download and install WIX Toolset v3.11
           Invoke-WebRequest -Uri "https://github.com/wixtoolset/wix3/releases/download/wix3112rtm/wix311.exe" -OutFile "wix311.exe"
           Start-Process -FilePath "wix311.exe" -ArgumentList "/quiet" -Wait
           Write-Host "✅ WIX Toolset installed successfully"
