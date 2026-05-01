@@ -62,7 +62,7 @@ RUN rustc --version && echo "Builder stage Rust version verified"
 # Install Node.js 22.x and pnpm
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     rm -f /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock /var/cache/apt/archives/lock && \
-    curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
+    curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && \
     apt-get update && apt-get install -y nodejs && \
     npm install -g pnpm && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
