@@ -8,7 +8,7 @@ inputs:
       - build: Complete environment (Node + Rust + System deps + Cache)
       - node: Node.js only (pnpm + Node 24)
       - rust: Rust only (toolchain + targets)
-    required: false
+    required: true
     default: "build"
 
 outputs:
@@ -23,16 +23,18 @@ runs:
     - name: Setup environment flags
       shell: bash
       run: |
-        MODE="${{ inputs.mode }}"
+        MODE="build"
 
         # Validate and set flags in one pass
         case "$MODE" in
           build|full)
+            echo "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true" >> $GITHUB_ENV
             echo "SETUP_NODE=true" >> $GITHUB_ENV
             echo "SETUP_RUST=true" >> $GITHUB_ENV
             echo "SETUP_SYSTEM=true" >> $GITHUB_ENV
             ;;
           node|node-only)
+            echo "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true" >> $GITHUB_ENV
             echo "SETUP_NODE=true" >> $GITHUB_ENV
             echo "SETUP_RUST=false" >> $GITHUB_ENV
             echo "SETUP_SYSTEM=false" >> $GITHUB_ENV
